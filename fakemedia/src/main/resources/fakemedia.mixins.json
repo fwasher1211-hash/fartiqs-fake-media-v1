@@ -4,7 +4,8 @@
   "package": "com.fakemedia.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "TextDisplayMixin"
+    "TextDisplayMixin",
+    "TextDisplayAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
