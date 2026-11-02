@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "fakemedia",
+  "version": "${version}",
+  "name": "Fake Media",
+  "description": "Client-side only. /fakemedia shows the media rank icon on your own nametag, /fakemedia off hides it.",
+  "authors": ["fartiqs"],
+  "license": "MIT",
+  "icon": "assets/fakemedia/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.fakemedia.FakeMediaClient"]
+  },
+  "mixins": [
+    { "config": "fakemedia.mixins.json", "environment": "client" }
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
