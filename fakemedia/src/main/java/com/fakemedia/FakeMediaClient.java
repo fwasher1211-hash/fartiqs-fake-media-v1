@@ -40,11 +40,14 @@ public class FakeMediaClient implements ClientModInitializer {
         );
     }
 
-    /** Puts the media icon at the very front of the name, so it sits left of the + rank and the name. */
+    /** Puts the media icon at the very front of the name, in a plain wrapper so the icon font doesn't leak onto the name. */
     public static Text withIcon(Text original) {
         if (original == null) return null;
         if (original.getString().contains(ICON_CHAR)) return original;
-        return getIcon().copy().append(original);
+        MutableText root = Text.empty();
+        root.append(getIcon().copy());
+        root.append(original);
+        return root;
     }
 
     private static Text getIcon() {
