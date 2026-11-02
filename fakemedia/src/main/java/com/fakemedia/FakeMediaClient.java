@@ -40,12 +40,13 @@ public class FakeMediaClient implements ClientModInitializer {
         );
     }
 
-    /** Puts the media icon at the very front of the name, in a plain wrapper so the icon font doesn't leak onto the name. */
+    /** Camera icon, then a normal space, then the original text. Wrapped so the icon font never leaks. */
     public static Text withIcon(Text original) {
         if (original == null) return null;
         if (original.getString().contains(ICON_CHAR)) return original;
         MutableText root = Text.empty();
         root.append(getIcon().copy());
+        root.append(Text.literal(" "));
         root.append(original);
         return root;
     }
@@ -54,12 +55,12 @@ public class FakeMediaClient implements ClientModInitializer {
         if (icon == null) {
             Text parsed = null;
             try {
-                String json = "{\"text\":\"" + ICON_CHAR + " \",\"font\":\"fakemedia:media\",\"color\":\"white\"}";
+                String json = "{\"text\":\"" + ICON_CHAR + "\",\"font\":\"fakemedia:media\",\"color\":\"white\"}";
                 parsed = TextCodecs.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString(json)).result().orElse(null);
             } catch (Throwable ignored) {
             }
             if (parsed == null) {
-                parsed = Text.literal("[Media] ").formatted(Formatting.LIGHT_PURPLE);
+                parsed = Text.literal("[Media]").formatted(Formatting.LIGHT_PURPLE);
             }
             icon = parsed;
         }
