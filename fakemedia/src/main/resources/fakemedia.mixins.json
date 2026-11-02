@@ -4,8 +4,7 @@
   "package": "com.fakemedia.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "PlayerEntityMixin",
-    "LivingEntityRendererMixin"
+    "TextDisplayMixin"
   ],
   "injectors": {
     "defaultRequire": 1
