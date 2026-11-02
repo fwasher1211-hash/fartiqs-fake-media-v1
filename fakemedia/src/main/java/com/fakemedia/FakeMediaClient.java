@@ -87,15 +87,20 @@ public class FakeMediaClient implements ClientModInitializer {
         MinecraftClient mc = MinecraftClient.getInstance();
         if (mc.world == null || mc.player == null) return 0;
         List<Entity> list = mc.world.getEntitiesByClass(
-            Entity.class, mc.player.getBoundingBox().expand(8.0), e -> e != mc.player);
-        src.sendFeedback(Text.literal("Nearby entities: " + list.size()));
+            Entity.class, mc.player.getBoundingBox().expand(8.0),
+            e -> e != mc.player
+                && e.getType() != EntityType.ITEM_FRAME
+                && e.getType() != EntityType.GLOW_ITEM_FRAME);
+        src.sendFeedback(Text.literal("Nearby (no item frames): " + list.size()));
         int shown = 0;
         for (Entity e : list) {
-            if (shown++ >= 10) break;
+            if (shown++ >= 8) break;
             String line = EntityType.getId(e.getType()).toString();
             if (e instanceof DisplayEntity.TextDisplayEntity td) {
                 Text raw = rawText(td);
                 line += " text=\"" + raw.getString().replace("\n", " | ") + "\" mine=" + isMine(td, raw, mc);
+            } else if (e.hasCustomName() && e.getCustomName() != null) {
+                line += " name=\"" + e.getCustomName().getString() + "\"";
             }
             src.sendFeedback(Text.literal(line));
         }
